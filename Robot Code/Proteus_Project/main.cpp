@@ -46,7 +46,7 @@ void movement(double duration, int power){
     left_motor.SetPercent(power);
     Sleep(duration);
     right_motor.Stop();
-    left_motor.Stop(0);
+    left_motor.Stop();
 }
 void turn(double angle){
     right_motor.SetPercent(angle * angleToPower);
