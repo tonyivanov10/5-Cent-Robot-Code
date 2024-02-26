@@ -8,7 +8,7 @@
 // AM 02/03/20
 
 /* Include preprocessor directives */
-#include <FEHLCD.h> 
+#include <FEHLCD.h>
 #include <FEHIO.h>
 #include <FEHUtility.h>
 #include <FEHMotor.h>
