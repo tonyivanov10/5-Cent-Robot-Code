@@ -70,5 +70,10 @@ void checkpointOne(){
 }
 
 int main(){
-    checkpointOne();
+    Sleep(5.0);
+    right_motor.SetPercent(25);
+    left_motor.SetPercent(25);
+    Sleep(10.0);
+    right_motor.Stop();
+    left_motor.Stop();
 }
