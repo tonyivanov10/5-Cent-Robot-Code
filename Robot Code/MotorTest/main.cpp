@@ -37,8 +37,8 @@
 #define ch1M4Duration 1
 #define ch1M4Power 30
 
-FEHMotor right_motor(FEHMotor::Motor0,9.0);
-FEHMotor left_motor(FEHMotor::Motor1,9.0);
+FEHMotor right_motor(FEHMotor::Motor2,9.0);
+FEHMotor left_motor(FEHMotor::Motor3,9.0);
 DigitalInputPin sensor(FEHIO::P0_0);
 
 void movement(double duration, int power){
