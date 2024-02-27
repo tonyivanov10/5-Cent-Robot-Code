@@ -22,7 +22,7 @@
 
 #define redMinRange 0
 #define redMaxRange 3.3
-#define DEREES_PER_SECOND 64.7482
+#define DEREES_PER_SECOND 65.5
 #define ch1T1Angle 30
 #define ch1M1Duration 1
 #define ch1M1Power 30
@@ -73,9 +73,10 @@ void checkpointOne(){
 
 int main(){
     Sleep(5.0);
-    right_motor.SetPercent(25);
-    left_motor.SetPercent(25);
-    Sleep(10.0);
+    right_motor.SetPercent(-45);
+    left_motor.SetPercent(40);
+    Sleep(15.0);
     right_motor.Stop();
     left_motor.Stop();
+
 }
