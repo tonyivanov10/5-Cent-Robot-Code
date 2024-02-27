@@ -22,7 +22,7 @@
 
 #define redMinRange 0
 #define redMaxRange 3.3
-#define degreesPerSecond 30
+#define DEREES_PER_SECOND 64.7482
 #define ch1T1Angle 30
 #define ch1M1Duration 1
 #define ch1M1Power 30
@@ -49,13 +49,15 @@ void movement(double duration, int power){
     left_motor.Stop();
 }
 void turn(double angle){
+    double time = angle / DEREES_PER_SECOND;
+
     right_motor.SetPercent(25);
     left_motor.SetPercent(25);
-    double time = angle / degreesPerSecond;
     Sleep(time);
     right_motor.Stop();
     left_motor.Stop();
 }
+
 void checkpointOne(){
     while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
     turn(ch1T1Angle);
