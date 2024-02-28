@@ -39,6 +39,8 @@
 #define ch1M4Power 30
 #define DEGREES_PER_TIC 4
 #define CIRCUMFERENCE 8.639379797
+#define redMinRange .5
+#define redMaxRange .75
 
 FEHMotor right_motor(FEHMotor::Motor2,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
@@ -50,31 +52,40 @@ DigitalEncoder left_encoder(FEHIO::P0_3);
 void movement(double distance){
     double revolutions = distance / CIRCUMFERENCE;
     double tics = revolutions * 360 / DEGREES_PER_TIC;
+    double percent = 70;
+
+    if(distance < 0) {
+        tics *= -1;
+        percent *= -1;
+    }
+
     right_encoder.ResetCounts();
     left_encoder.ResetCounts();
 
-    right_motor.SetPercent(-70);
-    left_motor.SetPercent(70);
-    while(right_encoder.Counts() < tics && left_encoder.Counts() < tics);
+    right_motor.SetPercent(-percent);
+    left_motor.SetPercent(percent);
 
+    while(right_encoder.Counts() < tics && left_encoder.Counts() < tics);
 
     right_motor.Stop();
     left_motor.Stop();
 }
 void turn(double angle){
-    double percent;
-    double time;
+    double tics = angle / DEGREES_PER_TIC;
+    double percent = 25;
     if (angle < 0) {
-        percent = -26.5;
-        time = -angle / DEREES_PER_SECOND;
-    } else {
-        percent = 24.5;
-        time = angle / DEREES_PER_SECOND;
+        tics += -1;
+        percent *= -1;
     }
+
+    right_encoder.ResetCounts();
+    left_encoder.ResetCounts();
 
     right_motor.SetPercent(percent);
     left_motor.SetPercent(percent);
-    Sleep(time);
+    
+    while(right_encoder.Counts() < tics && left_encoder.Counts() < tics);
+
     right_motor.Stop();
     left_motor.Stop();
 }
@@ -85,19 +96,12 @@ void checkpointOne(){
 
 
 int main(){
-    // Sleep(5.0);
-    // movement(14);
-    // Sleep(1.0);
-    // turn(-45);
-    // Sleep(1.0);
-    // movement(8.5);
-    // Sleep(1.0);
-    // turn(90);
-    // Sleep(1.0);
-    // movement(6.5);
-    // getUpRamp();
+    while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
 
     Sleep(5.0);
+    movement(5.75);
+    Sleep(0.5);
+
     movement(5.75);
     Sleep(0.5);
     turn(135);
@@ -106,7 +110,8 @@ int main(){
     turn(-90);
     Sleep(0.5);
     movement(8);
-    getUpRamp();
+    // getUpRamp();
+    movement(20);
     movement(1);
     turn(-20);
     movement(4);
@@ -117,11 +122,4 @@ int main(){
     turn(90);
     Sleep(0.5);
     movement(20);
-
-
-
-    // Sleep(4.0);
-    // turn(-90);
-    // Sleep(1.0);
-    // turn(90);
 }
