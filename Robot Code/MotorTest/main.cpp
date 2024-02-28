@@ -24,7 +24,7 @@
 #define redMaxRange 3.3
 #define DEREES_PER_SECOND 47.2
 #define INCHES_PER_SECOND 8.74613
-#define ch1T1Angle 30
+#define ch1T1Angle 30`
 #define ch1M1Duration 1
 #define ch1M1Power 30
 #define ch1T2Angle -30
@@ -37,24 +37,27 @@
 #define ch1T5Angle -30
 #define ch1M4Duration 1
 #define ch1M4Power 30
+#define DEGREES_PER_TIC 4
+#define CIRCUMFERENCE 8.639379797
 
 FEHMotor right_motor(FEHMotor::Motor2,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
 DigitalInputPin sensor(FEHIO::P0_0);
+DigitalEncoder right_encoder(FEHIO::P0_5);
+DigitalEncoder left_encoder(FEHIO::P0_3);
+
 
 void movement(double distance){
-    double time;
-    if (distance < 0){
-        time = -distance / INCHES_PER_SECOND;
-        right_motor.SetPercent(70);
-        left_motor.SetPercent(-70);
-    }
-    else{
-        time = distance / INCHES_PER_SECOND;
-        right_motor.SetPercent(-70);
-        left_motor.SetPercent(70);
-    }
-    Sleep(time);
+    double revolutions = distance / CIRCUMFERENCE;
+    double tics = revolutions * 360 / DEGREES_PER_TIC;
+    right_encoder.ResetCounts();
+    left_encoder.ResetCounts();
+
+    right_motor.SetPercent(-70);
+    left_motor.SetPercent(70);
+    while(right_encoder.Counts() < tics && left_encoder.Counts() < tics);
+
+
     right_motor.Stop();
     left_motor.Stop();
 }
@@ -65,7 +68,7 @@ void turn(double angle){
         percent = -26.5;
         time = -angle / DEREES_PER_SECOND;
     } else {
-        percent = 23.5;
+        percent = 24.5;
         time = angle / DEREES_PER_SECOND;
     }
 
@@ -78,14 +81,6 @@ void turn(double angle){
 
 void checkpointOne(){
     while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
-}
-
-void getUpRamp(){
-    right_motor.SetPercent(-93);
-    left_motor.SetPercent(90);
-    Sleep(2.0);
-    right_motor.Stop();
-    left_motor.Stop();
 }
 
 
