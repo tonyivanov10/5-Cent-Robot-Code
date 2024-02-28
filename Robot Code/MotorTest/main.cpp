@@ -20,8 +20,8 @@
 #include <string.h>
 #include <stdio.h>
 
-#define redMinRange .5
-#define redMaxRange .75
+#define redMinRange .3
+#define redMaxRange .45
 #define DEREES_PER_SECOND 47.2
 #define INCHES_PER_SECOND 8.74613
 #define ch1T1Angle 30
