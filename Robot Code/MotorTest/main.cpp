@@ -20,7 +20,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#define redMinRange .5
+#define redMinRange .3
 #define redMaxRange .75
 #define DEREES_PER_SECOND 47.2
 #define INCHES_PER_SECOND 8.74613
@@ -38,9 +38,9 @@
 #define ch1M4Duration 1
 #define ch1M4Power 30
 
-FEHMotor right_motor(FEHMotor::Motor2,7.2);
+FEHMotor right_motor(FEHMotor::Motor1,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
-DigitalInputPin sensor(FEHIO::P0_0);
+AnalogInputPin CdSCell(FEHIO::P0_0);
 
 void movement(double distance){
     double time;
@@ -62,10 +62,10 @@ void turn(double angle){
     double percent;
     double time;
     if (angle < 0) {
-        percent = -26.5;
+        percent = -26.2;
         time = -angle / DEREES_PER_SECOND;
     } else {
-        percent = 23.5;
+        percent = 24.2;
         time = angle / DEREES_PER_SECOND;
     }
 
@@ -77,7 +77,7 @@ void turn(double angle){
 }
 
 void checkpointOne(){
-    while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
+    while(!(redMinRange < CdSCell.Value() && CdSCell.Value() < redMaxRange)){}
 }
 
 void getUpRamp(){
@@ -109,9 +109,11 @@ int main(){
     // movement(6.5);
     // getUpRamp();
 
-    while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
+    while(!(redMinRange < CdSCell.Value() && CdSCell.Value() < redMaxRange)){
+        LCD.WriteLine(CdSCell.Value());
+    }
 
-    Sleep(5.0);
+    Sleep(1.0);
     movement(5.75);
     Sleep(0.5);
     turn(135);
@@ -131,10 +133,14 @@ int main(){
     turn(90);
     Sleep(0.5);
     movement(20);
+
+
     movement(-10);
     turn(-90);
-    movement(9);
-    turn(-90);
+    movement(6);
+    turn(-70);
+    movement(3);
+    turn(-20);
     movement(14.5);
     getDownRamp();
 
