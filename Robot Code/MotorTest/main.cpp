@@ -20,8 +20,8 @@
 #include <string.h>
 #include <stdio.h>
 
-#define redMinRange 0
-#define redMaxRange 3.3
+#define redMinRange .5
+#define redMaxRange .75
 #define DEREES_PER_SECOND 47.2
 #define INCHES_PER_SECOND 8.74613
 #define ch1T1Angle 30
@@ -108,6 +108,8 @@ int main(){
     // Sleep(1.0);
     // movement(6.5);
     // getUpRamp();
+
+    while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
 
     Sleep(5.0);
     movement(5.75);
