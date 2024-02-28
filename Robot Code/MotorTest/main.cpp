@@ -87,6 +87,13 @@ void getUpRamp(){
     right_motor.Stop();
     left_motor.Stop();
 }
+void getDownRamp(){
+    right_motor.SetPercent(-23);
+    left_motor.SetPercent(20);
+    Sleep(2.0);
+    right_motor.Stop();
+    left_motor.Stop();
+}
 
 
 int main(){
@@ -122,6 +129,12 @@ int main(){
     turn(90);
     Sleep(0.5);
     movement(20);
+    movement(-10);
+    turn(-90);
+    movement(9);
+    turn(-90);
+    movement(14.5);
+    getDownRamp();
 
 
 
