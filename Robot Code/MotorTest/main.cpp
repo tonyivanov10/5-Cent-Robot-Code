@@ -42,11 +42,12 @@
 #define redMinRange .5
 #define redMaxRange .75
 
-FEHMotor right_motor(FEHMotor::Motor2,7.2);
+FEHMotor right_motor(FEHMotor::Motor1,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
-DigitalInputPin sensor(FEHIO::P0_0);
+AnalogInputPin sensor(FEHIO::P0_0);
 DigitalEncoder right_encoder(FEHIO::P0_5);
 DigitalEncoder left_encoder(FEHIO::P0_3);
+
 
 
 void movement(double distance){
@@ -88,10 +89,6 @@ void turn(double angle){
 
     right_motor.Stop();
     left_motor.Stop();
-}
-
-void checkpointOne(){
-    while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
 }
 
 
