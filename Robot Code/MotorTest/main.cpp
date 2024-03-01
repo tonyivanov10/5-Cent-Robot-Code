@@ -22,7 +22,7 @@
 
 #define DEREES_PER_SECOND 47.2
 #define INCHES_PER_SECOND 8.74613
-#define DEGREES_PER_TIC 4
+#define DEGREES_PER_TIC 2
 #define CIRCUMFERENCE 8.639379797
 #define AXLE_CIRCUMFERENCE 18.06415776
 #define redMinRange .5
@@ -41,7 +41,7 @@ void movement(double distance){
     //The number of tics the encoder needs to read.
     double tics = revolutions * 360 / DEGREES_PER_TIC;
     //The power of the motors.
-    double percent = 70;
+    double percent = 60;
 
     //Formatting if the distance is negative.
     if(distance < 0) {
@@ -135,25 +135,17 @@ int main(){
     Sleep(.5);
 
     //Turn left 20 degree.
-    turn(-20);
+    turn(90);
     Sleep(.5);
-
-    //Move forward 4 inches.
-    movement(4);
-    Sleep(.5);
-
-    //Turn left 70 degrees.
-    turn(-70);
-    Sleep(0.5);
 
     //Move forward 6.5 inches.
-    movement(6.5);
+    movement(-7);
     Sleep(0.5);
 
     //Turn right 90 degrees.
-    turn(90);
+    turn(-90);
     Sleep(0.5);
 
     //Move forward 20 inches (hit the boarding pass section).
-    movement(20);
+    movement(-22);
 }
