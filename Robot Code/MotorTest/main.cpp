@@ -22,19 +22,6 @@
 
 #define DEREES_PER_SECOND 47.2
 #define INCHES_PER_SECOND 8.74613
-#define ch1T1Angle 30`
-#define ch1M1Duration 1
-#define ch1M1Power 30
-#define ch1T2Angle -30
-#define ch1M2Duration 2
-#define ch1M2Power 30
-#define ch1T3Angle -15
-#define ch1T4Angle 30
-#define ch1M3Duration 2
-#define ch1M3Power 30
-#define ch1T5Angle -30
-#define ch1M4Duration 1
-#define ch1M4Power 30
 #define DEGREES_PER_TIC 4
 #define CIRCUMFERENCE 8.639379797
 #define AXLE_CIRCUMFERENCE 18.06415776
@@ -122,7 +109,7 @@ void turn(double angle){
 int main(){
     //Wait until the starting light.
     while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
-    Sleep(5.0);
+    Sleep(1.0);
 
     //Move forward 5.75 inches.
     movement(5.75);
