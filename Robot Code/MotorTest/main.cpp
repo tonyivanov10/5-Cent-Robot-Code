@@ -34,17 +34,21 @@
 
 FEHMotor right_motor(FEHMotor::Motor1,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
-AnalogInputPin sensor(FEHIO::P0_0);
-DigitalEncoder right_encoder(FEHIO::P0_5);
-DigitalEncoder left_encoder(FEHIO::P0_3);
-DigitalEncoder right_dir(FEHIO::P0_4);
-DigitalEncoder left_dir(FEHIO::P0_2);
+AnalogInputPin CdsCell(FEHIO::P0_0);
+DigitalEncoder left_encoder_dir(FEHIO::P0_7);
+DigitalEncoder left_encoder_dis(FEHIO::P1_7);
+DigitalEncoder right_encoder_dir(FEHIO::P3_0);
+DigitalEncoder right_encoder_dis(FEHIO::P3_5);
 
 int main(){
-    //while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
-
-    LCD.WriteLine("Right: " + right_encoder.Counts());
-    LCD.WriteLine("Right: " + right_dir.Counts());
-    LCD.WriteLine("Left: " + left_encoder.Counts());
-    LCD.WriteLine("Left: " + left_dir.Counts());
+    left_encoder_dir.ResetCounts();
+    left_encoder_dis.ResetCounts();
+    right_encoder_dir.ResetCounts();
+    right_encoder_dis.ResetCounts();
+    
+    left_motor.SetPercent(50);
+    while (left_encoder_dis.Counts() < 360) {
+        
+    }
+    left_motor.Stop();
 }
