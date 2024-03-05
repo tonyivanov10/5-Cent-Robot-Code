@@ -25,6 +25,7 @@
 #define DEGREES_PER_TIC 2
 #define CIRCUMFERENCE 8.639379797
 #define AXLE_CIRCUMFERENCE 18.06415776
+#define THEORETICAL_COUNTS_PER_INCH 20.8348
 #define redMinRange .5
 #define redMaxRange .75
 
@@ -36,16 +37,14 @@ DigitalEncoder left_encoder(FEHIO::P0_3);
 
 //Movement function
 void movement(double distance){
-    //The number of revolutions the wheel needs to travel.
-    double revolutions = distance / CIRCUMFERENCE;
+
     //The number of tics the encoder needs to read.
-    double tics = revolutions * 360 / DEGREES_PER_TIC;
-    //The power of the motors.
+    double tics = distance * THEORETICAL_COUNTS_PER_INCH;
+
     double percent = 60;
 
     //Formatting if the distance is negative.
     if(distance < 0) {
-        tics *= -1;
         percent *= -1;
     }
 
@@ -85,7 +84,6 @@ void turn(double angle){
 
     //Formatting if the angle was negative.
     if (angle < 0) {
-        tics += -1;
         percent *= -1;
     }
 
@@ -107,6 +105,11 @@ void turn(double angle){
 
 //Main function
 int main(){
+
+    turn(360);
+
+    /**
+     * 
     //Wait until the starting light.
     while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
     Sleep(1.0);
@@ -148,4 +151,6 @@ int main(){
 
     //Move forward 20 inches (hit the boarding pass section).
     movement(-22);
+
+    */
 }
