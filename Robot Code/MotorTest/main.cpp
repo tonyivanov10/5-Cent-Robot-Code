@@ -97,17 +97,6 @@ void getDownRamp(){
 
 
 int main(){
-    // Sleep(5.0);
-    // movement(14);
-    // Sleep(1.0);
-    // turn(-45);
-    // Sleep(1.0);
-    // movement(8.5);
-    // Sleep(1.0);
-    // turn(90);
-    // Sleep(1.0);
-    // movement(6.5);
-    // getUpRamp();
 
     while(!(redMinRange < CdSCell.Value() && CdSCell.Value() < redMaxRange)){
         LCD.WriteLine(CdSCell.Value());
@@ -123,31 +112,23 @@ int main(){
     Sleep(0.5);
     movement(8);
     getUpRamp();
-    movement(1);
-    turn(-20);
-    movement(4);
-    turn(-70);
+    movement(3);
+
+    turn(92);
     Sleep(0.5);
-    movement(6.5);
+    movement(-6.5);
     Sleep(0.5);
     turn(90);
     Sleep(0.5);
-    movement(20);
+    movement(-20);
 
-
-    movement(-10);
-    turn(-90);
-    movement(6);
+    movement(14);
+    turn(90);
+    movement(12.5);
     turn(-70);
     movement(3);
     turn(-20);
-    movement(14.5);
+    movement(25);
     getDownRamp();
 
-
-
-    // Sleep(4.0);
-    // turn(-90);
-    // Sleep(1.0);
-    // turn(90);
 }
