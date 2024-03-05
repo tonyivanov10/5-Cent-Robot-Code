@@ -44,11 +44,11 @@
 
 FEHMotor right_motor(FEHMotor::Motor1,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
-AnalogInputPin sensor(FEHIO::P0_0);
-DigitalEncoder right_encoder(FEHIO::P0_5);
-DigitalEncoder left_encoder(FEHIO::P0_3);
-
-
+AnalogInputPin CdsCell(FEHIO::P0_0);
+DigitalEncoder left_encoder_dir(FEHIO::P0_7);
+DigitalEncoder left_encoder_dis(FEHIO::P1_7);
+DigitalEncoder right_encoder_dir(FEHIO::P3_0);
+DigitalEncoder right_encoder_dis(FEHIO::P3_5);
 
 void movement(double distance){
     double revolutions = distance / CIRCUMFERENCE;
@@ -60,13 +60,13 @@ void movement(double distance){
         percent *= -1;
     }
 
-    right_encoder.ResetCounts();
-    left_encoder.ResetCounts();
+    right_encoder_dis.ResetCounts();
+    left_encoder_dis.ResetCounts();
 
     right_motor.SetPercent(-percent);
     left_motor.SetPercent(percent);
 
-    while(right_encoder.Counts() < tics && left_encoder.Counts() < tics);
+    while(right_encoder_dis.Counts() < tics && left_encoder_dis.Counts() < tics);
 
     right_motor.Stop();
     left_motor.Stop();
@@ -79,13 +79,13 @@ void turn(double angle){
         percent *= -1;
     }
 
-    right_encoder.ResetCounts();
-    left_encoder.ResetCounts();
+    right_encoder_dis.ResetCounts();
+    left_encoder_dis.ResetCounts();
 
     right_motor.SetPercent(percent);
     left_motor.SetPercent(percent);
     
-    while(right_encoder.Counts() < tics && left_encoder.Counts() < tics);
+    while(right_encoder_dis.Counts() < tics && left_encoder_dis.Counts() < tics);
 
     right_motor.Stop();
     left_motor.Stop();
@@ -93,7 +93,7 @@ void turn(double angle){
 
 
 int main(){
-    while(!(redMinRange < sensor.Value() && sensor.Value() < redMaxRange)){}
+    while(!(redMinRange < CdsCell.Value() && CdsCell.Value() < redMaxRange)){}
 
     Sleep(5.0);
     movement(5.75);
