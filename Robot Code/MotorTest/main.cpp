@@ -24,7 +24,7 @@
 #define INCHES_PER_SECOND 8.74613
 #define DEGREES_PER_TIC 2
 #define CIRCUMFERENCE 8.639379797
-#define AXLE_CIRCUMFERENCE 18.06415776
+#define AXLE_CIRCUMFERENCE 19.22654704
 #define THEORETICAL_COUNTS_PER_INCH 20.8348
 #define redMinRange .5
 #define redMaxRange .75
@@ -46,6 +46,7 @@ void movement(double distance){
 
     //Formatting if the distance is negative.
     if(distance < 0) {
+        tics *= -1;
         percent *= -1;
     }
 
@@ -67,22 +68,20 @@ void movement(double distance){
 void turn(double angle){
 
     //The proportion of 360 the robot must turn.
-    double proportion = angle / 360;
+    double proportion = angle / 360.0;
 
     //The desired distance on the axle circumference the robot must turn.
     double desiredDistance = proportion * AXLE_CIRCUMFERENCE;
 
-    //The distance each wheel travels per tic.
-    double wheelDistancePerTic = CIRCUMFERENCE * (DEGREES_PER_TIC/360.0);
-
     //The number of tics the robot must read to turn the desired distance.
-    double tics = (desiredDistance / 2) / wheelDistancePerTic;
+    double tics = desiredDistance * THEORETICAL_COUNTS_PER_INCH;
 
     //The power of the motors.
     double percent = 25;
 
     //Formatting if the angle was negative.
     if (angle < 0) {
+        tics *= -1;
         percent *= -1;
     }
 
@@ -103,7 +102,13 @@ void turn(double angle){
 }
 
 //Main function
+/**
+ * NOTE: The theoretical counts per inch is a little too high causing the movement to overshoot 
+ * by around .25-.75 inches. Chaning this would also impact the turning so it would be advised to 
+ * increase the axle circumference a little bit.
+*/
 int main(){
+    
     while(!(redMinRange < CdsCell.Value() && CdsCell.Value() < redMaxRange)){}
 
     //Move forward 5.75 inches.
@@ -143,4 +148,5 @@ int main(){
 
     //Move forward 20 inches (hit the boarding pass section).
     movement(-22);
+    
 }
