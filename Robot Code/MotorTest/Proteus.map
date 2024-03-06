@@ -47,7 +47,7 @@ Archive member included to satisfy reference by file (symbol)
 /Applications/FEH_ARM/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libstdc++.a(eh_type.o)
                               /Applications/FEH_ARM/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/libstdc++.a(vterminate.o) (__cxa_current_exception_type)
 /Applications/FEH_ARM/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m/nofp/libgcc.a(_arm_muldf3.o)
-                              ../main.o (__aeabi_dmul)
+                              Libraries/FEHMotor.o (__aeabi_dmul)
 /Applications/FEH_ARM/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m/nofp/libgcc.a(_arm_mulsf3.o)
                               Drivers/mcg.o (__aeabi_fmul)
 /Applications/FEH_ARM/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m/nofp/libgcc.a(_arm_addsubdf3.o)
@@ -546,6 +546,8 @@ Discarded input sections
  .text._ZN15DigitalInputPin5ValueEv
                 0x0000000000000000      0x108 Libraries/FEHIO.o
  .text._ZN14DigitalEncoderC2EN5FEHIO8FEHIOPinENS0_21FEHIOInterruptTriggerE
+                0x0000000000000000       0x26 Libraries/FEHIO.o
+ .text._ZN14DigitalEncoderC2EN5FEHIO8FEHIOPinE
                 0x0000000000000000       0x26 Libraries/FEHIO.o
  .text._ZN14DigitalEncoderC2Ev
                 0x0000000000000000       0x14 Libraries/FEHIO.o
