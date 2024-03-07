@@ -154,29 +154,26 @@ void waitForInitiationLight() {
 }
 
 void driveToKioskLight() {
-    moveBothMotors(0.5, 40);
-    moveLeftMotor(0.5, 40);
-    moveBothMotors(1, 40);
-    moveLeftMotor(12, 40);
-    moveRightMotor(7.5, 40);
-    moveBothMotors(26.5, 60);
-    moveRightMotor(4.9, 40);
-    moveBothMotors(24, 60);
+    moveLeftMotor((AXLE_CIRCUMFERENCE/2), 40);
+    moveBothMotors(3, 40);
+    moveRightMotor((AXLE_CIRCUMFERENCE/8), 40);
+    moveBothMotors(21, 60);
+    turn(135);
 }
 
 void driveAndTouchKioskButton(ColorLight lightColor) {
     if (lightColor == RED_LIGHT) {
         LCD.Write("RED");
         LCD.Write(CdsCell.Value());
-        moveBothMotors(-10, 60);
-        moveRightMotor(-6, 40);
+        moveBothMotors(10, 60);
+        moveLeftMotor(6, 40);
         moveBothMotors(15.5, 60);
     }
     else {
         LCD.Write("BLUE");
         LCD.Write(CdsCell.Value());
-        moveBothMotors(-6, 60);
-        moveRightMotor(-4.5, 40);
+        moveBothMotors(6, 60);
+        moveLeftMotor(4.5, 40);
         moveBothMotors(11, 60);
     }
 }
