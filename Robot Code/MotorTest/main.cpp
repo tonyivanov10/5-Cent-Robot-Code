@@ -26,8 +26,10 @@
 #define CIRCUMFERENCE 8.639379797
 #define AXLE_CIRCUMFERENCE 19.22654704
 #define THEORETICAL_COUNTS_PER_INCH 20.8348
-#define redMinRange .5
-#define redMaxRange .75
+#define redMinRange .25
+#define redMaxRange 0.8
+#define blueMinRange 1.0
+#define blueMaxRange 1.6
 
 FEHMotor right_motor(FEHMotor::Motor1,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
@@ -37,12 +39,15 @@ DigitalEncoder left_encoder_dis(FEHIO::P1_7);
 DigitalEncoder right_encoder_dir(FEHIO::P3_0);
 DigitalEncoder right_encoder_dis(FEHIO::P3_5);
 
-void movement(double distance){
+enum ColorLight {
+    RED_LIGHT,
+    BLUE_LIGHT
+};
+
+void moveBothMotors(double distance, double percent){
 
     //The number of tics the encoder needs to read.
     double tics = distance * THEORETICAL_COUNTS_PER_INCH;
-
-    double percent = 60;
 
     //Formatting if the distance is negative.
     if(distance < 0) {
@@ -61,6 +66,49 @@ void movement(double distance){
 
     //Stop the motors.
     right_motor.Stop();
+    left_motor.Stop();
+}
+
+void moveRightMotor(double distance, double percent) {
+
+    //The number of tics the encoder needs to read.
+    double tics = distance * THEORETICAL_COUNTS_PER_INCH;
+
+    //Formatting if the distance is negative.
+    if(distance < 0) {
+        tics *= -1;
+        percent *= -1;
+    }
+
+    right_encoder_dis.ResetCounts();
+
+    //Right motor travels backwards and left motor travels forward.
+    right_motor.SetPercent(-percent);
+
+    while(right_encoder_dis.Counts() < tics);
+
+    //Stop the motors.
+    right_motor.Stop();
+}
+
+void moveLeftMotor(double distance, double percent) {
+
+    //The number of tics the encoder needs to read.
+    double tics = distance * THEORETICAL_COUNTS_PER_INCH;
+
+    //Formatting if the distance is negative.
+    if(distance < 0) {
+        tics *= -1;
+        percent *= -1;
+    }
+    left_encoder_dis.ResetCounts();
+
+    //Right motor travels backwards and left motor travels forward.
+    left_motor.SetPercent(percent);
+
+    while(left_encoder_dis.Counts() < tics);
+
+    //Stop the motors.
     left_motor.Stop();
 }
 
@@ -101,6 +149,56 @@ void turn(double angle){
     left_motor.Stop();
 }
 
+void waitForInitiationLight() {
+    while(!(redMinRange < CdsCell.Value() && CdsCell.Value() < redMaxRange)){}
+}
+
+void driveToKioskLight() {
+    moveBothMotors(0.5, 40);
+    moveLeftMotor(0.5, 40);
+    moveBothMotors(1, 40);
+    moveLeftMotor(12, 40);
+    moveRightMotor(7.5, 40);
+    moveBothMotors(26.5, 60);
+    moveRightMotor(4.9, 40);
+    moveBothMotors(24, 60);
+}
+
+void driveAndTouchKioskButton(ColorLight lightColor) {
+    if (lightColor == RED_LIGHT) {
+        LCD.Write("RED");
+        LCD.Write(CdsCell.Value());
+        moveBothMotors(-10, 60);
+        moveRightMotor(-6, 40);
+        moveBothMotors(15.5, 60);
+    }
+    else {
+        LCD.Write("BLUE");
+        LCD.Write(CdsCell.Value());
+        moveBothMotors(-6, 60);
+        moveRightMotor(-4.5, 40);
+        moveBothMotors(11, 60);
+    }
+}
+
+void driveDownRamp(ColorLight lightColor) {
+
+}
+
+ColorLight readKioskLight() {
+    ColorLight lightRead;
+    if (redMinRange < CdsCell.Value() && CdsCell.Value() < redMaxRange) {
+        lightRead = RED_LIGHT;
+    }
+    else if (blueMinRange < CdsCell.Value() && CdsCell.Value() < blueMaxRange){
+        lightRead = BLUE_LIGHT;
+    }
+    else {
+        lightRead = BLUE_LIGHT;
+    }
+    return lightRead;
+}
+
 //Main function
 /**
  * NOTE: The theoretical counts per inch is a little too high causing the movement to overshoot 
@@ -109,44 +207,15 @@ void turn(double angle){
 */
 int main(){
     
-    while(!(redMinRange < CdsCell.Value() && CdsCell.Value() < redMaxRange)){}
-
-    //Move forward 5.75 inches.
-    movement(5.75);
-    Sleep(0.5);
-
-    //Turn right 135 degrees.
-    turn(135);
-    Sleep(0.5);
-
-    //Move forward 8 inches.
-    movement(8);
-    Sleep(.5);
-
-    //Turn left 90 degrees.
-    turn(-90);
-    Sleep(0.5);
-
-    //Move forward 8 inches.
-    movement(8);
-
-    //Move forward (up the ramp) 20 inches.
-    movement(21);
-    Sleep(.5);
-
-    //Turn left 20 degree.
-    turn(90);
-    Sleep(.5);
-
-    //Move forward 6.5 inches.
-    movement(-7);
-    Sleep(0.5);
-
-    //Turn right 90 degrees.
-    turn(-90);
-    Sleep(0.5);
-
-    //Move forward 20 inches (hit the boarding pass section).
-    movement(-22);
+    //waitForInitiationLight();
     
+    driveToKioskLight();
+
+    Sleep(1000);
+
+    ColorLight kioskColor = readKioskLight();
+
+    driveAndTouchKioskButton(kioskColor);
+
+    //driveDownRamp(kioskColor);
 }
