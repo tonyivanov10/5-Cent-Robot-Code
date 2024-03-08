@@ -181,7 +181,18 @@ void driveAndTouchKioskButton(ColorLight lightColor) {
 }
 
 void driveDownRamp(ColorLight lightColor) {
+    moveBothMotors(11,60);
+    turn(90);
 
+    if (lightColor == RED_LIGHT) {
+        moveBothMotors(6, 60);
+    }
+    else {
+        moveBothMotors(4, 60);
+    }
+
+    moveRightMotor((2*AXLE_CIRCUMFERENCE / 4), 40);
+    moveBothMotors(25, 60);
 }
 
 ColorLight readKioskLight() {
