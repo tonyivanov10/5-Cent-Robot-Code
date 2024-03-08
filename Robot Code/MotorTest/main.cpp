@@ -1,11 +1,4 @@
-/********************************/
-/*      Proteus Test Code       */
-/*     OSU FEH Spring 2020      */
-/*        Drew Phillips         */
-/*    02/03/20  Version 3.0.1     */
-/********************************/
-
-// AM 02/03/20
+// Team C5
 
 /* Include preprocessor directives */
 #include <FEHLCD.h>
