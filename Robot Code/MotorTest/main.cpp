@@ -26,10 +26,10 @@
 #define CIRCUMFERENCE 8.639379797
 #define AXLE_CIRCUMFERENCE 19.22654704
 #define THEORETICAL_COUNTS_PER_INCH 20.8348
-#define redMinRange .25
+#define redMinRange 0.0
 #define redMaxRange 0.8
-#define blueMinRange 1.0
-#define blueMaxRange 1.6
+#define blueMinRange 1.6
+#define blueMaxRange 2.4
 
 FEHMotor right_motor(FEHMotor::Motor1,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
@@ -154,11 +154,20 @@ void waitForInitiationLight() {
 }
 
 void driveToKioskLight() {
-    moveLeftMotor((AXLE_CIRCUMFERENCE/2), 40);
-    moveBothMotors(3, 40);
-    moveRightMotor((AXLE_CIRCUMFERENCE/8), 40);
-    moveBothMotors(21, 60);
-    turn(135);
+    moveLeftMotor((2*AXLE_CIRCUMFERENCE/4), 40);
+    Sleep(1.0);
+    moveBothMotors(3, 60);
+    Sleep(1.0);
+    moveRightMotor((2*AXLE_CIRCUMFERENCE/8 + .5), 40);
+    Sleep(1.0);
+    turn(180);
+    Sleep(1.0);
+    moveBothMotors(-21, 90);
+    Sleep(1.0);
+    moveLeftMotor(-(2*AXLE_CIRCUMFERENCE/8-((20/360)*2*AXLE_CIRCUMFERENCE)), 40);
+    Sleep(1.0);
+    moveBothMotors(-30,60);
+    moveBothMotors(2.25,60);
 }
 
 void driveAndTouchKioskButton(ColorLight lightColor) {
@@ -167,14 +176,14 @@ void driveAndTouchKioskButton(ColorLight lightColor) {
         LCD.Write(CdsCell.Value());
         moveBothMotors(10, 60);
         moveLeftMotor(6, 40);
-        moveBothMotors(15.5, 60);
+        moveBothMotors(-15.5, 60);
     }
     else {
         LCD.Write("BLUE");
         LCD.Write(CdsCell.Value());
         moveBothMotors(6, 60);
         moveLeftMotor(4.5, 40);
-        moveBothMotors(11, 60);
+        moveBothMotors(-11, 60);
     }
 }
 
@@ -184,14 +193,24 @@ void driveDownRamp(ColorLight lightColor) {
 
 ColorLight readKioskLight() {
     ColorLight lightRead;
+    while(!((redMinRange < CdsCell.Value() && CdsCell.Value() < redMaxRange) || (blueMinRange < CdsCell.Value() && CdsCell.Value() < blueMaxRange)))
+    {
+        LCD.WriteLine(CdsCell.Value());
+    }
+
     if (redMinRange < CdsCell.Value() && CdsCell.Value() < redMaxRange) {
         lightRead = RED_LIGHT;
+        LCD.WriteLine(lightRead);
     }
     else if (blueMinRange < CdsCell.Value() && CdsCell.Value() < blueMaxRange){
         lightRead = BLUE_LIGHT;
+        LCD.WriteLine("0");
+        LCD.WriteLine(lightRead);
     }
     else {
         lightRead = BLUE_LIGHT;
+        LCD.WriteLine("1");
+        LCD.WriteLine(lightRead);
     }
     return lightRead;
 }
@@ -203,8 +222,8 @@ ColorLight readKioskLight() {
  * increase the axle circumference a little bit.
 */
 int main(){
-    
-    //waitForInitiationLight();
+
+    waitForInitiationLight();
     
     driveToKioskLight();
 
