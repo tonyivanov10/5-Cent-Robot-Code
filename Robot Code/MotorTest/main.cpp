@@ -167,7 +167,7 @@ void driveToKioskLight() {
     moveLeftMotor(-(2*AXLE_CIRCUMFERENCE/8-((20/360)*2*AXLE_CIRCUMFERENCE)), 40);
     Sleep(1.0);
     moveBothMotors(-30,60);
-    moveBothMotors(2.25,60);
+    moveBothMotors(3,60);
 }
 
 void driveAndTouchKioskButton(ColorLight lightColor) {
