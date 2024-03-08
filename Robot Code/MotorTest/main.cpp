@@ -157,7 +157,7 @@ void driveToKioskLight() {
     Sleep(1.0);
     moveBothMotors(-21, 90);
     Sleep(1.0);
-    moveLeftMotor(-(2*AXLE_CIRCUMFERENCE/8-((20/360)*2*AXLE_CIRCUMFERENCE)), 40);
+    moveLeftMotor(-(((45/360.0)*2*AXLE_CIRCUMFERENCE)), 40);
     Sleep(1.0);
     moveBothMotors(-30,60);
     moveBothMotors(3,60);
@@ -237,5 +237,5 @@ int main(){
 
     driveAndTouchKioskButton(kioskColor);
 
-    //driveDownRamp(kioskColor);
+    driveDownRamp(kioskColor);
 }
