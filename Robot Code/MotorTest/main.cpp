@@ -23,6 +23,10 @@
 #define redMaxRange 0.8
 #define blueMinRange 1.6
 #define blueMaxRange 2.4
+#define LUGGAGE_SERVO_MIN 500
+#define LUGGAGE_SERVO_MAX 2425
+#define ARM_SERVO_MIN 500
+#define ARM_SERVO_MAX 2500
 
 FEHMotor right_motor(FEHMotor::Motor1,7.2);
 FEHMotor left_motor(FEHMotor::Motor3,7.2);
@@ -31,6 +35,8 @@ DigitalEncoder left_encoder_dir(FEHIO::P0_7);
 DigitalEncoder left_encoder_dis(FEHIO::P1_7);
 DigitalEncoder right_encoder_dir(FEHIO::P3_0);
 DigitalEncoder right_encoder_dis(FEHIO::P3_5);
+FEHServo ArmServo(FEHServo:: Servo0);
+FEHServo LuggageServo(FEHServo:: Servo7);
 
 enum ColorLight {
     RED_LIGHT,
@@ -226,16 +232,4 @@ ColorLight readKioskLight() {
  * increase the axle circumference a little bit.
 */
 int main(){
-
-    waitForInitiationLight();
-    
-    driveToKioskLight();
-
-    Sleep(1000);
-
-    ColorLight kioskColor = readKioskLight();
-
-    driveAndTouchKioskButton(kioskColor);
-
-    driveDownRamp(kioskColor);
 }
