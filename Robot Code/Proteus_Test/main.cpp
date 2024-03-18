@@ -16,7 +16,6 @@
 #include <FEHAccel.h>
 #include <FEHBattery.h>
 #include <FEHBuzzer.h>
-#include <FEHRPS.h>
 #include <FEHSD.h>
 #include <string.h>
 #include <stdio.h>
@@ -1254,85 +1253,6 @@ int DOMenu()
     return menu;
 }
 
-/* RPS Menu function */
-int RPMenu()
-{
-    LCD.Clear(BLACK);
-
-    /* Open log file */
-    FEHFile* fil = SD.FOpen("test_code.txt", "w");
-    LCD.Clear(BLACK);
-
-    /* Check to see if the Proteus has already initialized to a course region */
-    if (!RPS_init)
-    {
-        RPS.InitializeTouchMenu();
-        RPS_init = 1;
-    }
-
-    LCD.Clear(BLACK);
-
-    /* Create RPS menu icons */
-    FEHIcon::Icon RP_T[1];
-    char rp_t_label[1][20] = {"RPS"};
-    FEHIcon::DrawIconArray(RP_T, 1, 1, 1, 201, 1, 1, rp_t_label, MENU_C, TEXT_C);
-
-    FEHIcon::Icon Back[1];
-    char back_label[1][20] = {"<-"};
-    FEHIcon::DrawIconArray(Back, 1, 1, 1, 201, 1, 260, back_label, MENU_C, TEXT_C);
-
-    FEHIcon::Icon RP_XYH[3];
-    char rp_xyh_label[3][20] = {"X", "Y", "Heading"};
-    FEHIcon::DrawIconArray(RP_XYH, 1, 3, 40, 120, 1, 1, rp_xyh_label, SHOW_C, TEXT_C);
-
-    FEHIcon::Icon RP_VAL[3];
-    char rp_val_label[3][20] = {"", "", ""};
-    FEHIcon::DrawIconArray(RP_VAL, 1, 3, 120, 40, 1, 1, rp_val_label, SHOW_C, TEXT_C);
-
-    FEHIcon::Icon RP_LOG[1];
-    char rp_log_label[1][20] = {"Log Data"};
-    FEHIcon::DrawIconArray(RP_LOG, 1, 1, 201, 2, 1, 1, rp_log_label, SELT_C, TEXT_C);
-
-    Buzzer.Buzz(beep_t);
-
-    int menu=RP_MENU;
-    float x, y;
-
-    while(menu==RP_MENU)
-    {
-        /* Update RPS x, y, and heading values */
-        RP_VAL[0].ChangeLabelFloat(RPS.X());
-        RP_VAL[1].ChangeLabelFloat(RPS.Y());
-        RP_VAL[2].ChangeLabelFloat(RPS.Heading());
-        if (LCD.Touch(&x, &y))
-        {
-            /* Check to see if log data icon has been touched */
-            if (RP_LOG[0].Pressed(x, y, 0))
-            {
-                /* While log data icon is pressed, update values and write them to log file */
-                while (RP_LOG[0].Pressed(x, y, 1))
-                {
-                    RP_VAL[0].ChangeLabelFloat(RPS.X());
-                    RP_VAL[1].ChangeLabelFloat(RPS.Y());
-                    RP_VAL[2].ChangeLabelFloat(RPS.Heading());
-                    SD.FPrintf(fil, "X: %f, Y: %f, Heading: %f\n", RPS.X(), RPS.Y(), RPS.Heading());
-                }
-                RP_LOG[0].Deselect();
-            }
-            /* If back button has been touched, go to main menu */
-            if (Back[0].Pressed(x, y, 0))
-            {
-                Back[0].WhilePressed(x, y);
-                menu = MN_MENU;
-            }
-        }
-    }
-    /* Close log file */
-    SD.FClose(fil);
-
-    return menu;
-}
-
 /* Main function to control menu system */
 int main(void)
 {
@@ -1364,9 +1284,6 @@ int main(void)
             break;
         case DO_MENU:
             menu = DOMenu();
-            break;
-        case RP_MENU:
-            menu = RPMenu();
             break;
         }
     }
