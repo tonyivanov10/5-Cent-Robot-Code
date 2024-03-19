@@ -239,76 +239,101 @@ ColorLight readKioskLight() {
 int main(){
     ArmServo.SetMin(ARM_SERVO_MIN);
     ArmServo.SetMax(ARM_SERVO_MAX);
-    ArmServo.SetDegree(160);
+    Sleep(1.0);
+    ArmServo.SetDegree(0);
+    Sleep(1.0);
+    ArmServo.SetDegree(180);
          // Initialize the RCS
     /*RCS.InitializeTouchMenu("B7p93noDy");
     // Get correct lever from the RCS
     int correctLever = RCS.GetCorrectLever();*/
-     int correctLever = 0;
+     int correctLever = 1;
     // Check which lever to flip and perform some action
     if(correctLever == 0)
     {
         // Perform actions to flip left lever
-        turn(-55);
+        moveBothMotors(2,60);
         Sleep(1.0);
-        LCD.WriteLine("HELLO WORLD");
-        moveBothMotors(8,60);
+        turn(45);
         Sleep(1.0);
-        turn(90);
+        moveBothMotors(6,60);
         Sleep(1.0);
-        moveBothMotors(10,60);
+        turn(-120);
         Sleep(1.0);
-        turn(90);
+        moveBothMotors(3,60);
         Sleep(1.0);
-        moveBothMotors(7,60);
+        turn(-100);
         Sleep(1.0);
-        ArmServo.SetDegree(10);
+        moveBothMotors(4.5,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(70);
         Sleep(5.0);
-        ArmServo.SetDegree(100);
+        moveBothMotors(-5,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(60);
+        Sleep(1.0);
+        moveBothMotors(6,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(160);
     } 
     else if(correctLever == 1)
     {
         // Perform actions to flip middle lever
-    moveBothMotors(10,60);
-    Sleep(1.0);
-    turn(45);
-    Sleep(1.0);
-    moveBothMotors(5,60);
-    Sleep(1.0);
-    ArmServo.SetDegree(70);
-    Sleep(5.0);
-    moveBothMotors(-5,60);
-    Sleep(1.0);
-    ArmServo.SetDegree(10);
-    Sleep(1.0);
-    moveBothMotors(5,60);
-    Sleep(1.0);
-    ArmServo.SetDegree(100);
+    moveBothMotors(3,60);
+        Sleep(1.0);
+        turn(45);
+        Sleep(1.0);
+        moveBothMotors(6,60);
+        Sleep(1.0);
+        turn(-95);
+        Sleep(1.0);
+        moveBothMotors(14,60);
+        LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine(right_encoder_dis.Counts());
+        LCD.WriteLine(left_encoder_dis.Counts());
+        Sleep(1.0);
+        turn(-95);
+        Sleep(1.0);
+        moveBothMotors(0.5,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(70);
+        Sleep(5.0);
+        moveBothMotors(-5,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(60);
+        Sleep(1.0);
+        turn(3);
+        Sleep(1.0);
+        moveBothMotors(6,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(180);
     }
     else if(correctLever == 2)
     {
        // Perform actions to flip right lever
-        turn(-45);
+        moveBothMotors(2,60);
         Sleep(1.0);
-        moveBothMotors(5,60);
+        turn(45);
         Sleep(1.0);
-        turn(90);
+        moveBothMotors(6,60);
         Sleep(1.0);
-        moveBothMotors(10,60);
+        turn(-120);
         Sleep(1.0);
-        turn(90);
+        moveBothMotors(3,60);
         Sleep(1.0);
-        moveBothMotors(7,60);
+        turn(-100);
         Sleep(1.0);
-        ArmServo.SetDegree(10);
+        moveBothMotors(4.5,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(70);
         Sleep(5.0);
         moveBothMotors(-5,60);
         Sleep(1.0);
-        ArmServo.SetDegree(10);
+        ArmServo.SetDegree(60);
         Sleep(1.0);
-        moveBothMotors(5,60);
+        moveBothMotors(6,60);
         Sleep(1.0);
-        ArmServo.SetDegree(100);
+        ArmServo.SetDegree(180);
     }
 
 }
