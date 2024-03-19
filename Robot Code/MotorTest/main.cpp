@@ -54,6 +54,7 @@ void moveBothMotors(double distance, double percent){
         percent *= -1;
     }
 
+    percent = (11.5 / Battery.Voltage()) * percent;
     right_encoder_dis.ResetCounts();
     left_encoder_dis.ResetCounts();
 
@@ -79,6 +80,7 @@ void moveRightMotor(double distance, double percent) {
         percent *= -1;
     }
 
+    percent = (11.5 / Battery.Voltage()) * percent;
     right_encoder_dis.ResetCounts();
 
     //Right motor travels backwards and left motor travels forward.
@@ -102,6 +104,7 @@ void moveLeftMotor(double distance, double percent) {
     }
     left_encoder_dis.ResetCounts();
 
+    percent = (11.5 / Battery.Voltage()) * percent;
     //Right motor travels backwards and left motor travels forward.
     left_motor.SetPercent(percent);
 
@@ -132,6 +135,8 @@ void turn(double angle){
         percent *= -1;
     }
 
+    percent = (11.5 / Battery.Voltage()) * percent;
+    
     //Setting the encoder counts to zero.
     right_encoder_dis.ResetCounts();
     left_encoder_dis.ResetCounts();
