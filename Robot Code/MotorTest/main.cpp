@@ -237,4 +237,77 @@ ColorLight readKioskLight() {
  * increase the axle circumference a little bit.
 */
 int main(){
+    ArmServo.SetMin(ARM_SERVO_MIN);
+    ArmServo.SetMax(ARM_SERVO_MAX);
+    ArmServo.SetDegree(160);
+         // Initialize the RCS
+    /*RCS.InitializeTouchMenu("B7p93noDy");
+    // Get correct lever from the RCS
+    int correctLever = RCS.GetCorrectLever();*/
+     int correctLever = 0;
+    // Check which lever to flip and perform some action
+    if(correctLever == 0)
+    {
+        // Perform actions to flip left lever
+        turn(-45);
+        Sleep(1.0);
+        moveBothMotors(5,60);
+        Sleep(1.0);
+        turn(90);
+        Sleep(1.0);
+        moveBothMotors(10,60);
+        Sleep(1.0);
+        turn(90);
+        Sleep(1.0);
+        moveBothMotors(7,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(10);
+        Sleep(5.0);
+        ArmServo.SetDegree(100);
+    } 
+    else if(correctLever == 1)
+    {
+        // Perform actions to flip middle lever
+    moveBothMotors(10,60);
+    Sleep(1.0);
+    turn(45);
+    Sleep(1.0);
+    moveBothMotors(5,60);
+    Sleep(1.0);
+    ArmServo.SetDegree(70);
+    Sleep(5.0);
+    moveBothMotors(-5,60);
+    Sleep(1.0);
+    ArmServo.SetDegree(10);
+    Sleep(1.0);
+    moveBothMotors(5,60);
+    Sleep(1.0);
+    ArmServo.SetDegree(100);
+    }
+    else if(correctLever == 2)
+    {
+       // Perform actions to flip right lever
+        turn(-45);
+        Sleep(1.0);
+        moveBothMotors(5,60);
+        Sleep(1.0);
+        turn(90);
+        Sleep(1.0);
+        moveBothMotors(10,60);
+        Sleep(1.0);
+        turn(90);
+        Sleep(1.0);
+        moveBothMotors(7,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(10);
+        Sleep(5.0);
+        moveBothMotors(-5,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(10);
+        Sleep(1.0);
+        moveBothMotors(5,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(100);
+    }
+
 }
