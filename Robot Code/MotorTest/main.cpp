@@ -249,9 +249,10 @@ int main(){
     if(correctLever == 0)
     {
         // Perform actions to flip left lever
-        turn(-45);
+        turn(-55);
         Sleep(1.0);
-        moveBothMotors(5,60);
+        LCD.WriteLine("HELLO WORLD");
+        moveBothMotors(8,60);
         Sleep(1.0);
         turn(90);
         Sleep(1.0);
