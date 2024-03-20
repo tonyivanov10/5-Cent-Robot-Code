@@ -12,6 +12,7 @@
 #include <FEHSD.h>
 #include <string.h>
 #include <stdio.h>
+#include <FEHRCS.h>
 
 #define DEREES_PER_SECOND 47.2
 #define INCHES_PER_SECOND 8.74613
@@ -244,25 +245,26 @@ int main(){
     Sleep(1.0);
     ArmServo.SetDegree(180);
          // Initialize the RCS
-    /*RCS.InitializeTouchMenu("B7p93noDy");
+    RCS.InitializeTouchMenu("C5xgMcuUY");
     // Get correct lever from the RCS
-    int correctLever = RCS.GetCorrectLever();*/
-     int correctLever = 1;
+    int correctLever = RCS.GetCorrectLever();
     // Check which lever to flip and perform some action
     if(correctLever == 0)
     {
         // Perform actions to flip left lever
+        LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine("LEFT");
         moveBothMotors(2,60);
         Sleep(1.0);
         turn(45);
         Sleep(1.0);
         moveBothMotors(6,60);
         Sleep(1.0);
-        turn(-120);
+        turn(-90);
         Sleep(1.0);
         moveBothMotors(3,60);
         Sleep(1.0);
-        turn(-100);
+        turn(-90);
         Sleep(1.0);
         moveBothMotors(4.5,60);
         Sleep(1.0);
@@ -279,20 +281,22 @@ int main(){
     else if(correctLever == 1)
     {
         // Perform actions to flip middle lever
+        LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine("MIDDLE");
     moveBothMotors(3,60);
         Sleep(1.0);
         turn(45);
         Sleep(1.0);
         moveBothMotors(6,60);
         Sleep(1.0);
-        turn(-95);
+        turn(-90);
         Sleep(1.0);
         moveBothMotors(14,60);
         LCD.SetBackgroundColor(BLACK);
         LCD.WriteLine(right_encoder_dis.Counts());
         LCD.WriteLine(left_encoder_dis.Counts());
         Sleep(1.0);
-        turn(-95);
+        turn(-90);
         Sleep(1.0);
         moveBothMotors(0.5,60);
         Sleep(1.0);
@@ -311,17 +315,19 @@ int main(){
     else if(correctLever == 2)
     {
        // Perform actions to flip right lever
+       LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine("RIGHT");
         moveBothMotors(2,60);
         Sleep(1.0);
         turn(45);
         Sleep(1.0);
         moveBothMotors(6,60);
         Sleep(1.0);
-        turn(-120);
+        turn(-90);
         Sleep(1.0);
         moveBothMotors(3,60);
         Sleep(1.0);
-        turn(-100);
+        turn(-90);
         Sleep(1.0);
         moveBothMotors(4.5,60);
         Sleep(1.0);
