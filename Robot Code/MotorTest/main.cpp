@@ -238,6 +238,8 @@ ColorLight readKioskLight() {
  * increase the axle circumference a little bit.
 */
 int main(){
+    RCS.InitializeTouchMenu("C5xgMcuUY");
+    int correctLever = RCS.GetCorrectLever();
     ArmServo.SetMin(ARM_SERVO_MIN);
     ArmServo.SetMax(ARM_SERVO_MAX);
     Sleep(1.0);
@@ -245,9 +247,7 @@ int main(){
     Sleep(1.0);
     ArmServo.SetDegree(180);
          // Initialize the RCS
-    RCS.InitializeTouchMenu("C5xgMcuUY");
     // Get correct lever from the RCS
-    int correctLever = RCS.GetCorrectLever();
     // Check which lever to flip and perform some action
     if(correctLever == 0)
     {
@@ -262,21 +262,21 @@ int main(){
         Sleep(1.0);
         turn(-90);
         Sleep(1.0);
-        moveBothMotors(3,60);
+        moveBothMotors(9,60);
         Sleep(1.0);
         turn(-90);
         Sleep(1.0);
-        moveBothMotors(4.5,60);
+        moveBothMotors(0.5,60);
         Sleep(1.0);
-        ArmServo.SetDegree(70);
+        ArmServo.SetDegree(30);
         Sleep(5.0);
-        moveBothMotors(-5,60);
+        moveBothMotors(-3,60);
         Sleep(1.0);
-        ArmServo.SetDegree(60);
+        ArmServo.SetDegree(10);
         Sleep(1.0);
-        moveBothMotors(6,60);
+        moveBothMotors(3,60);
         Sleep(1.0);
-        ArmServo.SetDegree(160);
+        ArmServo.SetDegree(150);
     } 
     else if(correctLever == 1)
     {
@@ -291,26 +291,26 @@ int main(){
         Sleep(1.0);
         turn(-90);
         Sleep(1.0);
-        moveBothMotors(14,60);
+        moveBothMotors(13.75,60);
         LCD.SetBackgroundColor(BLACK);
         LCD.WriteLine(right_encoder_dis.Counts());
         LCD.WriteLine(left_encoder_dis.Counts());
         Sleep(1.0);
         turn(-90);
         Sleep(1.0);
-        moveBothMotors(0.5,60);
+        moveBothMotors(1,60);
         Sleep(1.0);
-        ArmServo.SetDegree(70);
+        ArmServo.SetDegree(30);
         Sleep(5.0);
-        moveBothMotors(-5,60);
+        moveBothMotors(-3,60);
         Sleep(1.0);
-        ArmServo.SetDegree(60);
+        ArmServo.SetDegree(10);
         Sleep(1.0);
         turn(3);
         Sleep(1.0);
-        moveBothMotors(6,60);
+        moveBothMotors(3,60);
         Sleep(1.0);
-        ArmServo.SetDegree(180);
+        ArmServo.SetDegree(150);
     }
     else if(correctLever == 2)
     {
@@ -325,21 +325,21 @@ int main(){
         Sleep(1.0);
         turn(-90);
         Sleep(1.0);
+        moveBothMotors(19,60);
+        Sleep(1.0);
+        turn(-100);
+        Sleep(1.0);
+        moveBothMotors(1,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(30);
+        Sleep(5.0);
+        moveBothMotors(-3,60);
+        Sleep(1.0);
+        ArmServo.SetDegree(10);
+        Sleep(1.0);
         moveBothMotors(3,60);
         Sleep(1.0);
-        turn(-90);
-        Sleep(1.0);
-        moveBothMotors(4.5,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(70);
-        Sleep(5.0);
-        moveBothMotors(-5,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(60);
-        Sleep(1.0);
-        moveBothMotors(6,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(180);
+        ArmServo.SetDegree(150);
     }
 
 }
