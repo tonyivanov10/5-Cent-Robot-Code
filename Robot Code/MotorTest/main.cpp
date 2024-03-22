@@ -231,6 +231,96 @@ ColorLight readKioskLight() {
     return lightRead;
 }
 
+//lines up into the specific position
+void startLineUp(){
+    moveBothMotors(2,60);
+    Sleep(1.0);
+    turn(45);
+    Sleep(1.0);
+}
+//flips lever down and up
+void flip(){
+    ArmServo.SetDegree(30);
+    Sleep(5.0);
+    moveBothMotors(-3,60);
+    Sleep(1.0);
+    ArmServo.SetDegree(10);
+    Sleep(1.0);
+    moveBothMotors(3,60);
+    Sleep(1.0);
+    ArmServo.SetDegree(150);
+}
+
+//flips levers from a specific position
+void flipLevers(){
+    RCS.InitializeTouchMenu("C5xgMcuUY");
+    int correctLever = RCS.GetCorrectLever();
+    ArmServo.SetMin(ARM_SERVO_MIN);
+    ArmServo.SetMax(ARM_SERVO_MAX);
+    Sleep(1.0);
+    ArmServo.SetDegree(0);
+    Sleep(1.0);
+    ArmServo.SetDegree(180);
+    startLineUp();
+         // Initialize the RCS
+    // Get correct lever from the RCS
+    // Check which lever to flip and perform some action
+    if(correctLever == 0)
+    {
+        // Perform actions to flip left lever
+        LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine("LEFT");
+        moveBothMotors(6,60);
+        Sleep(1.0);
+        turn(-90);
+        Sleep(1.0);
+        moveBothMotors(9,60);
+        Sleep(1.0);
+        turn(-90);
+        Sleep(1.0);
+        moveBothMotors(0.5,60);
+        Sleep(1.0);
+        flip();
+    } 
+    else if(correctLever == 1)
+    {
+        // Perform actions to flip middle lever
+        LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine("MIDDLE");
+        moveBothMotors(6,60);
+        Sleep(1.0);
+        turn(-90);
+        Sleep(1.0);
+        moveBothMotors(13.75,60);
+        LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine(right_encoder_dis.Counts());
+        LCD.WriteLine(left_encoder_dis.Counts());
+        Sleep(1.0);
+        turn(-90);
+        Sleep(1.0);
+        moveBothMotors(1,60);
+        Sleep(1.0);
+        flip();
+    }
+    else
+    {
+       // Perform actions to flip right lever
+        LCD.SetBackgroundColor(BLACK);
+        LCD.WriteLine("RIGHT");
+        moveBothMotors(6,60);
+        Sleep(1.0);
+        turn(-90);
+        Sleep(1.0);
+        moveBothMotors(19,60);
+        Sleep(1.0);
+        turn(-100);
+        Sleep(1.0);
+        moveBothMotors(1,60);
+        Sleep(1.0);
+        flip();
+    }
+}
+
 //Main function
 /**
  * NOTE: The theoretical counts per inch is a little too high causing the movement to overshoot 
