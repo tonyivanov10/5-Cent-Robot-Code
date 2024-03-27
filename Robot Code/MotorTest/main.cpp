@@ -18,7 +18,7 @@
 #define INCHES_PER_SECOND 8.74613
 #define DEGREES_PER_TIC 2
 #define CIRCUMFERENCE 8.639379797
-#define AXLE_CIRCUMFERENCE 19.22654704
+#define AXLE_CIRCUMFERENCE 18.22123739
 #define THEORETICAL_COUNTS_PER_INCH 20.8348
 #define redMinRange 0.0
 #define redMaxRange 0.8
@@ -118,6 +118,16 @@ void moveLeftMotor(double distance, double percent) {
 //Turning function
 void turn(double angle){
 
+    if(angle < 0)
+    {
+        angle -= 25;
+    }
+    else if (angle > 0)
+    {
+        angle += 42;
+    }
+    
+
     //The proportion of 360 the robot must turn.
     double proportion = angle / 360.0;
 
@@ -135,6 +145,7 @@ void turn(double angle){
         tics *= -1;
         percent *= -1;
     }
+    
 
     percent = (11.5 / Battery.Voltage()) * percent;
     
@@ -328,108 +339,25 @@ void flipLevers(){
  * increase the axle circumference a little bit.
 */
 int main(){
-    RCS.InitializeTouchMenu("C5xgMcuUY");
-    int correctLever = RCS.GetCorrectLever();
+   
     ArmServo.SetMin(ARM_SERVO_MIN);
     ArmServo.SetMax(ARM_SERVO_MAX);
-    Sleep(1.0);
-    ArmServo.SetDegree(0);
-    Sleep(1.0);
-    ArmServo.SetDegree(180);
-         // Initialize the RCS
-    // Get correct lever from the RCS
-    // Check which lever to flip and perform some action
-    if(correctLever == 0)
-    {
-        // Perform actions to flip left lever
-        LCD.SetBackgroundColor(BLACK);
-        LCD.WriteLine("LEFT");
-        moveBothMotors(2,60);
-        Sleep(1.0);
-        turn(45);
-        Sleep(1.0);
-        moveBothMotors(6,60);
-        Sleep(1.0);
-        turn(-90);
-        Sleep(1.0);
-        moveBothMotors(9,60);
-        Sleep(1.0);
-        turn(-90);
-        Sleep(1.0);
-        moveBothMotors(0.5,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(30);
-        Sleep(5.0);
-        moveBothMotors(-3,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(10);
-        Sleep(1.0);
-        moveBothMotors(3,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(150);
-    } 
-    else if(correctLever == 1)
-    {
-        // Perform actions to flip middle lever
-        LCD.SetBackgroundColor(BLACK);
-        LCD.WriteLine("MIDDLE");
-    moveBothMotors(3,60);
-        Sleep(1.0);
-        turn(45);
-        Sleep(1.0);
-        moveBothMotors(6,60);
-        Sleep(1.0);
-        turn(-90);
-        Sleep(1.0);
-        moveBothMotors(13.75,60);
-        LCD.SetBackgroundColor(BLACK);
-        LCD.WriteLine(right_encoder_dis.Counts());
-        LCD.WriteLine(left_encoder_dis.Counts());
-        Sleep(1.0);
-        turn(-90);
-        Sleep(1.0);
-        moveBothMotors(1,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(30);
-        Sleep(5.0);
-        moveBothMotors(-3,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(10);
-        Sleep(1.0);
-        turn(3);
-        Sleep(1.0);
-        moveBothMotors(3,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(150);
-    }
-    else if(correctLever == 2)
-    {
-       // Perform actions to flip right lever
-       LCD.SetBackgroundColor(BLACK);
-        LCD.WriteLine("RIGHT");
-        moveBothMotors(2,60);
-        Sleep(1.0);
-        turn(45);
-        Sleep(1.0);
-        moveBothMotors(6,60);
-        Sleep(1.0);
-        turn(-90);
-        Sleep(1.0);
-        moveBothMotors(19,60);
-        Sleep(1.0);
-        turn(-100);
-        Sleep(1.0);
-        moveBothMotors(1,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(30);
-        Sleep(5.0);
-        moveBothMotors(-3,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(10);
-        Sleep(1.0);
-        moveBothMotors(3,60);
-        Sleep(1.0);
-        ArmServo.SetDegree(150);
-    }
 
+    //moveLeftMotor((2*AXLE_CIRCUMFERENCE/4), 40);
+    //turn(92);
+    //Sleep(.5);
+    //moveBothMotors(4, 60);
+    //Sleep(.5);
+    //moveRightMotor((2*AXLE_CIRCUMFERENCE/8), 40);
+    //Sleep(.5);
+    //turn(182);
+    //Sleep(.5);
+    //moveBothMotors(-21, 90);
+    //Sleep(.5);
+
+    turn(360);
+
+    Sleep(10.0);
+
+    turn(-360);
 }
