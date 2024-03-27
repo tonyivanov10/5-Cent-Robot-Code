@@ -61,7 +61,7 @@ void moveBothMotors(double distance, double percent){
 
     //Right motor travels backwards and left motor travels forward.
     right_motor.SetPercent(-percent);
-    left_motor.SetPercent(percent);
+    left_motor.SetPercent(percent*1.04);
 
     while(right_encoder_dis.Counts() < tics && left_encoder_dis.Counts() < tics);
 
@@ -116,18 +116,10 @@ void moveLeftMotor(double distance, double percent) {
 }
 
 //Turning function
-void turn(double angle){
+void turn(double angle){ 
 
-    if(angle < 0)
-    {
-        angle -= 25;
-    }
-    else if (angle > 0)
-    {
-        angle += 42;
-    }
-    
-
+    // adjust to correct error
+    angle = angle / .825;
     //The proportion of 360 the robot must turn.
     double proportion = angle / 360.0;
 
@@ -342,22 +334,42 @@ int main(){
    
     ArmServo.SetMin(ARM_SERVO_MIN);
     ArmServo.SetMax(ARM_SERVO_MAX);
+    ArmServo.SetDegree(0);
+    waitForInitiationLight();
 
-    //moveLeftMotor((2*AXLE_CIRCUMFERENCE/4), 40);
-    //turn(92);
+    moveLeftMotor((2*AXLE_CIRCUMFERENCE/2+2*AXLE_CIRCUMFERENCE/8), 40);
+    
+    
+    
     //Sleep(.5);
-    //moveBothMotors(4, 60);
+    //moveBothMotors(3, 60);
     //Sleep(.5);
     //moveRightMotor((2*AXLE_CIRCUMFERENCE/8), 40);
     //Sleep(.5);
-    //turn(182);
-    //Sleep(.5);
-    //moveBothMotors(-21, 90);
-    //Sleep(.5);
+    //turn(180);
+    Sleep(.5);
+    moveBothMotors(-27, 90);
+    Sleep(.5);
+    moveLeftMotor(-(2*AXLE_CIRCUMFERENCE/4 + .5),40);
+    Sleep(.5);
+    moveBothMotors(-2.5,50);
+    Sleep(.5);
+    moveRightMotor((2*AXLE_CIRCUMFERENCE/4),40);
+    Sleep(.5);
+    moveBothMotors(4.5,50);
+    Sleep(.5);
 
-    turn(360);
+    ArmServo.SetDegree(0);
+    ArmServo.SetDegree(160);
+    Sleep(.5);
+    moveBothMotors(3.5,40);
+    moveBothMotors(-1,40);
+    ArmServo.SetDegree(180);
+    Sleep(.5);
+    moveBothMotors(5,40);
+    Sleep(.5);
+    moveBothMotors(-3,40);
+    ArmServo.SetDegree(0);
+    moveBothMotors(-7,40);
 
-    Sleep(10.0);
-
-    turn(-360);
 }
